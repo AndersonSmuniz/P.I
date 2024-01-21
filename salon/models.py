@@ -2,18 +2,6 @@ from django.db import models
 from django.contrib.auth.hashers import make_password
 
 
-class Location(models.Model):
-    """
-    Modelo para guardar a localização do salão
-    """
-
-    type = models.CharField(max_length=20)
-    coordinates = models.CharField(max_length=255)
-
-    def __str__(self):
-        return "%s, %s" % (self.type, self.coordinates)
-
-
 class Salon(models.Model):
     """
     Modelo de salão
@@ -24,11 +12,6 @@ class Salon(models.Model):
     password = models.CharField(max_length=255)
     phone = models.CharField(max_length=255)
     address = models.CharField(max_length=255)
-    location = models.OneToOneField(
-        Location,
-        on_delete=models.CASCADE,
-        related_name="salon_location",
-    )
 
     def __str__(self):
         return self.name
@@ -37,3 +20,18 @@ class Salon(models.Model):
         if not self.password.startswith(("pbkdf2_sha256$", "bcrypt", "argon2")):
             self.password = make_password(self.password)
         super().save(*args, **kwargs)
+
+
+class Location(models.Model):
+    """
+    Modelo para guardar a localização do salão
+    """
+
+    type = models.CharField(max_length=20)
+    coordinates = models.CharField(max_length=255)
+    salon_id = models.ForeignKey(
+        Salon, on_delete=models.CASCADE, related_name="salon_location"
+    )
+
+    def __str__(self):
+        return "%s, %s" % (self.salon_id.name, self.coordinates)

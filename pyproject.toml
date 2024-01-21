@@ -10,6 +10,9 @@ python = "^3.12"
 django = "^5.0.1"
 decouple = "^0.0.7"
 python-dotenv = "^1.0.0"
+djangorestframework = "^3.14.0"
+markdown = "^3.5.2"
+django-filter = "^23.5"
 
 
 [tool.poetry.group.dev.dependencies]
