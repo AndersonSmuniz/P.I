@@ -11,4 +11,4 @@ class LocationSerializer(serializers.ModelSerializer):
 class SalonSerializer(serializers.ModelSerializer):
     class Meta:
         model = Salon
-        fields = ["name", "image", "phone", "address"]
+        fields = ["name_salon", "address"]

@@ -1,5 +1,4 @@
 from django.db import models
-from django.contrib.auth.hashers import make_password
 
 
 class Salon(models.Model):
@@ -7,19 +6,11 @@ class Salon(models.Model):
     Modelo de salão
     """
 
-    name = models.CharField(max_length=255, unique=True, null=False)
-    image = models.URLField(blank=True)
-    password = models.CharField(max_length=255)
-    phone = models.CharField(max_length=255)
+    name_salon = models.CharField(max_length=255, unique=True, null=False)
     address = models.CharField(max_length=255)
 
     def __str__(self):
-        return self.name
-
-    def save(self, *args, **kwargs):
-        if not self.password.startswith(("pbkdf2_sha256$", "bcrypt", "argon2")):
-            self.password = make_password(self.password)
-        super().save(*args, **kwargs)
+        return self.name_salon
 
 
 class Location(models.Model):
@@ -34,4 +25,4 @@ class Location(models.Model):
     )
 
     def __str__(self):
-        return "%s, %s" % (self.salon_id.name, self.coordinates)
+        return "%s, %s" % (self.salon_id.name_salon, self.coordinates)
