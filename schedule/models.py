@@ -28,3 +28,9 @@ class Schedule(models.Model):
 
     class Meta:
         ordering = ["day", "start"]
+        verbose_name = "Agendamento"
+        verbose_name_plural = "Agendamentos"
+        indexes = [
+            models.Index(fields=["day", "start"]),
+            models.Index(fields=["collaborator_user"]),
+        ]

@@ -12,6 +12,10 @@ class Salon(models.Model):
     def __str__(self):
         return self.name_salon
 
+    class Meta:
+        verbose_name = "Salão"
+        verbose_name_plural = "Salões"
+
 
 class Location(models.Model):
     """
@@ -20,9 +24,11 @@ class Location(models.Model):
 
     type = models.CharField(max_length=20)
     coordinates = models.CharField(max_length=255)
-    salon_id = models.ForeignKey(
-        Salon, on_delete=models.CASCADE, related_name="salon_location"
-    )
+    salon = models.ForeignKey(Salon, on_delete=models.CASCADE, related_name="locations")
 
     def __str__(self):
-        return "%s, %s" % (self.salon_id.name_salon, self.coordinates)
+        return f"{self.salon.name_salon} - {self.coordinates}"
+
+    class Meta:
+        verbose_name = "Localização"
+        verbose_name_plural = "Localizações"

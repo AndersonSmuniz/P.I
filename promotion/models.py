@@ -3,8 +3,7 @@ from salon.models import Salon
 
 
 class Promotion(models.Model):
-    id = models.CharField(max_lenght=255, primary_key=True)
-    # service = models.ForeignKey(Service, on_delete=models.CASCADE)
+    service = models.ForeignKey(Service, on_delete=models.CASCADE)
     salon = models.ForeignKey(Salon, on_delete=models.CASCADE)
     value = models.DecimalField(max_digits=10, decimal_places=2)
     start = models.DateTimeField()
@@ -14,7 +13,9 @@ class Promotion(models.Model):
     created_date = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return f"{self.service.name} - {self.salon.name} - {self.start}"
+        return f"{self.salon.name_salon} - {self.start}"
 
     class Meta:
         ordering = ["start"]
+        verbose_name = "Promoção"
+        verbose_name_plural = "Promoções"

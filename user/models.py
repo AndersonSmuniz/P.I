@@ -16,3 +16,7 @@ class User(AbstractUser):
 
     def __str__(self):
         return self.full_name
+
+    class Meta:
+        verbose_name = "User"
+        verbose_name_plural = "Users"
