@@ -19,8 +19,17 @@ class Service(models.Model):
     def __str__(self):
         return self.title
 
+
 class CollaboratorService(models.Model):
     collaborator_user = models.ManyToManyField(CollaboratorUser, on_delete=models.CASCADE)
     service = models.ManyToManyField(Service, on_delete=models.CASCADE)
     status = models.CharField(max_length=20, null=False, blank=False)
     created_data = models.DateField(auto_now_add=True)
+
+
+class ClienteService(models.Model):
+    cliente_user = models.ManyToManyField(Service, on_delete=models.CASCADE)
+    service = models.ManyToManyField(Service, on_delete=models.CASCADE)
+    status = models.CharField(max_length=20, null=False, blank=False)
+    created_data = models.DateField(auto_now_add=True)
+    
