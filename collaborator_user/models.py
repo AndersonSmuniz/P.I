@@ -5,9 +5,17 @@ from auth.models import Auth
 
 
 class SalonCollaborator(models.Model):
-    collaborator = models.ForeignKey("CollaboratorUser", on_delete=models.CASCADE)
-    salon = models.ForeignKey(Salon, on_delete=models.CASCADE)
-    status = models.CharField(max_length=255)
+    collaborator = models.ForeignKey(
+        "CollaboratorUser",
+        on_delete=models.CASCADE,
+    )
+    salon = models.ForeignKey(
+        Salon,
+        on_delete=models.CASCADE,
+    )
+    status = models.CharField(
+        max_length=255,
+    )
 
     def __str__(self):
         return f"{self.collaborator.user.full_name} - {self.salon.name_salon} - {self.status}"
@@ -25,13 +33,19 @@ class CollaboratorUser(ExtraField):
     auth = models.OneToOneField(
         Auth,
         on_delete=models.CASCADE,
-        verbose_name="Conta",
+        verbose_name="Account",
         related_name="collaborator",
         primary_key=True,
     )
-    is_barber = models.BooleanField(default=False)
-    is_manager = models.BooleanField(default=False)
-    is_owner = models.BooleanField(default=False)
+    is_barber = models.BooleanField(
+        default=False,
+    )
+    is_manager = models.BooleanField(
+        default=False,
+    )
+    is_owner = models.BooleanField(
+        default=False,
+    )
     salon_collaborators = models.ManyToManyField(
         Salon,
         through="SalonCollaborator",

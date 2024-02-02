@@ -43,6 +43,12 @@ INSTALLED_APPS = [
     "salon",
     "collaborator_user",
     "auth",
+    "booking",
+    "clientuser",
+    "core",
+    "promotion",
+    "schedule",
+    "service",
 ]
 
 MIDDLEWARE = [
