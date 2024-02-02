@@ -13,8 +13,6 @@ class Schedule(models.Model):
         (6, "Sexta"),
         (7, "Sábado"),
     ]
-
-    id = models.CharField(max_length=255, primary_key=True)
     salon = models.ForeignKey(Salon, on_delete=models.CASCADE)
     # service = models.ManyToManyField(Service, on_delete=models.CASCADE)
     collaborator_user = models.ForeignKey(CollaboratorUser, on_delete=models.CASCADE)

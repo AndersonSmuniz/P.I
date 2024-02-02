@@ -13,14 +13,17 @@ class Booking(models.Model):
     salon = models.ForeignKey(
         Salon,
         on_delete=models.CASCADE,
+        related_name="booking",
     )
     collaborator = models.ForeignKey(
         CollaboratorUser,
         on_delete=models.PROTECT,
+        related_name="booking",
     )
     client = models.ForeignKey(
         CleintUser,
         on_delete=models.PROTECT,
+        related_name="booking",
     )
     service = models.ManyToManyField(
         Service,

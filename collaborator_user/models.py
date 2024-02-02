@@ -1,7 +1,7 @@
 from django.db import models
-
+from core.models import ExtraField
 from salon.models import Salon
-from user.models import User
+from auth.models import Auth
 
 
 class SalonCollaborator(models.Model):
@@ -17,22 +17,25 @@ class SalonCollaborator(models.Model):
         verbose_name_plural = "Colaboradores do Salão"
 
 
-class CollaboratorUser(models.Model):
+class CollaboratorUser(ExtraField):
     """
     Model do Colaborador
     """
 
-    user = models.OneToOneField(
-        User,
+    auth = models.OneToOneField(
+        Auth,
         on_delete=models.CASCADE,
         verbose_name="Conta",
+        related_name="collaborator",
         primary_key=True,
     )
     is_barber = models.BooleanField(default=False)
     is_manager = models.BooleanField(default=False)
-
+    is_owner = models.BooleanField(default=False)
     salon_collaborators = models.ManyToManyField(
-        Salon, through="SalonCollaborator", verbose_name="Colaboradores do Salão"
+        Salon,
+        through="SalonCollaborator",
+        verbose_name="Colaboradores do Salão",
     )
 
     def __str__(self):
