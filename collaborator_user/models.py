@@ -1,7 +1,7 @@
 from django.db import models
 from core.models import ExtraField
 from salon.models import Salon
-from auth.models import Auth
+from my_auth.models import Auth
 
 
 class SalonCollaborator(models.Model):

@@ -4,9 +4,11 @@ from .models import CollaboratorUser
 
 class CollaboratorUserAdmin(admin.ModelAdmin):
     list_display = [
-        "user",
+        "full_name",
+        "auth",
         "is_barber",
         "is_manager",
+        "is_owner",
         "display_salon_collaborators",
     ]
 

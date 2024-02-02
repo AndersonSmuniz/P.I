@@ -1,9 +1,9 @@
 from django.db import models
 from core.models import ExtraField
-from auth.models import Auth
+from my_auth.models import Auth
 
 
-class ClientUser(models.Model):
+class ClientUser(ExtraField):
     cpf = models.CharField(max_length=11, null=False, blank=False)
 
     auth = models.OneToOneField(
@@ -16,3 +16,7 @@ class ClientUser(models.Model):
 
     def __str__(self):
         return self.full_name
+
+    class Meta:
+        verbose_name = "Cleinte"
+        verbose_name_plural = "Clientes"
