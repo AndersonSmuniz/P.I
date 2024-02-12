@@ -1,3 +1,7 @@
 from django.contrib import admin
+from .models import Auth
 
-# Register your models here.
+
+@admin.register(Auth)
+class AuthAmin(admin.ModelAdmin):
+    pass

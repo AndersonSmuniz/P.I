@@ -18,7 +18,9 @@ class SalonCollaborator(models.Model):
     )
 
     def __str__(self):
-        return f"{self.collaborator.user.full_name} - {self.salon.name_salon} - {self.status}"
+        return (
+            f"{self.collaborator.full_name} - {self.salon.name_salon} - {self.status}"
+        )
 
     class Meta:
         verbose_name = "Colaborador do Salão"
@@ -53,7 +55,7 @@ class CollaboratorUser(ExtraField):
     )
 
     def __str__(self):
-        return self.user.full_name
+        return self.full_name
 
     class Meta:
         verbose_name = "Colaborador"

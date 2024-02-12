@@ -9,7 +9,7 @@ class Auth(AbstractUser):
     pass
 
     def __str__(self):
-        return self.id
+        return self.username
 
     class Meta:
         verbose_name = "Conta"
