@@ -38,7 +38,7 @@ class Schedule(models.Model):
     )
 
     def __str__(self):
-        return f"{self.collaborator_user.username} - {self.get_day_display()} - {self.start}"
+        return f"{self.collaborator_user} - {self.get_day_display()} - {self.start}"
 
     class Meta:
         ordering = ["day", "start"]

@@ -5,6 +5,7 @@ from .models import Schedule
 @admin.register(Schedule)
 class ScheduleAdmin(admin.ModelAdmin):
     list_display = (
+        "display_salon",
         "display_collaborator_user",
         "display_service",
         "day",
@@ -13,6 +14,7 @@ class ScheduleAdmin(admin.ModelAdmin):
         "created_date",
     )
     list_filter = (
+        "salon",
         "service",
         "day",
         "start",
@@ -26,6 +28,11 @@ class ScheduleAdmin(admin.ModelAdmin):
         "start",
     )
     actions = ["setar_promocao_ativa"]
+
+    def display_salon(self, obj):
+        return obj.salon.name_salon
+
+    display_salon.short_description = "Salon"
 
     def display_collaborator_user(self, obj):
         return obj.collaborator_user.full_name
@@ -46,7 +53,14 @@ class ScheduleAdmin(admin.ModelAdmin):
         (
             "Informações Básicas",
             {
-                "fields": ("collaborator_user", "service", "day", "start", "end"),
+                "fields": (
+                    "salon",
+                    "collaborator_user",
+                    "service",
+                    "day",
+                    "start",
+                    "end",
+                ),
             },
         ),
         (
