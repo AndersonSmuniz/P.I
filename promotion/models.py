@@ -1,5 +1,6 @@
 from django.db import models
 from salon.models import Salon
+from service.models import Service
 
 
 class Promotion(models.Model):

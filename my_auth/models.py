@@ -1,4 +1,3 @@
-from django.db import models
 from django.contrib.auth.models import AbstractUser
 
 
@@ -10,8 +9,8 @@ class Auth(AbstractUser):
     pass
 
     def __str__(self):
-        return self.full_name
+        return self.username
 
     class Meta:
-        verbose_name = "User"
-        verbose_name_plural = "Users"
+        verbose_name = "Conta"
+        verbose_name_plural = "Contas"

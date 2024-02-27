@@ -5,17 +5,44 @@ from .models import Schedule
 @admin.register(Schedule)
 class ScheduleAdmin(admin.ModelAdmin):
     list_display = (
-        "collaborator_user",
-        "service",
+        "display_salon",
+        "display_collaborator_user",
+        "display_service",
         "day",
         "start",
         "end",
         "created_date",
     )
-    list_filter = ("service", "day", "start")
-    search_fields = ("collaborator_user", "service__name")
-    ordering = ("day", "start")
+    list_filter = (
+        "salon",
+        "service",
+        "day",
+        "start",
+    )
+    search_fields = (
+        "collaborator_user",
+        "service",
+    )
+    ordering = (
+        "day",
+        "start",
+    )
     actions = ["setar_promocao_ativa"]
+
+    def display_salon(self, obj):
+        return obj.salon.name_salon
+
+    display_salon.short_description = "Salon"
+
+    def display_collaborator_user(self, obj):
+        return obj.collaborator_user.full_name
+
+    display_collaborator_user.short_description = "Collaborator User"
+
+    def display_service(self, obj):
+        return ", ".join([service.title for service in obj.service.all()])
+
+    display_service.short_description = "Service"
 
     def setar_promocao_ativa(self, request, queryset):
         queryset.update(status="Ativo")
@@ -26,7 +53,14 @@ class ScheduleAdmin(admin.ModelAdmin):
         (
             "Informações Básicas",
             {
-                "fields": ("collaborator_user", "service", "day", "start", "end"),
+                "fields": (
+                    "salon",
+                    "collaborator_user",
+                    "service",
+                    "day",
+                    "start",
+                    "end",
+                ),
             },
         ),
         (
@@ -37,4 +71,4 @@ class ScheduleAdmin(admin.ModelAdmin):
             },
         ),
     )
-    readonly_fields = "created_date"
+    readonly_fields = ("created_date",)

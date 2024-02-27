@@ -1,7 +1,7 @@
 from django.db import models
 from salon.models import Salon
 from collaborator_user.models import CollaboratorUser
-from client_user.models import CleintUser
+from clientuser.models import ClientUser
 from service.models import Service
 
 
@@ -21,7 +21,7 @@ class Booking(models.Model):
         related_name="booking",
     )
     client = models.ForeignKey(
-        CleintUser,
+        ClientUser,
         on_delete=models.PROTECT,
         related_name="booking",
     )
