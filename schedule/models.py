@@ -41,5 +41,5 @@ class Schedule(models.Model):
 
     class Meta:
         ordering = ["day", "start"]
-        verbose_name = "Agendamento"
-        verbose_name_plural = "Agendamentos"
+        verbose_name = "Calendario"
+        verbose_name_plural = "Calendarios"
