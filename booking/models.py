@@ -4,7 +4,7 @@ from salon.models import Salon
 from clientuser.models import ClientUser
 from schedule.models import Schedule
 from service.models import Service
-
+from django.utils import timezone
 
 class Booking(models.Model):
     STATUS_BOOKING = [
@@ -29,16 +29,18 @@ class Booking(models.Model):
         on_delete=models.PROTECT,
         related_name="bookings_client",
     )
-    service = models.ManyToManyField(
+    services = models.ManyToManyField(
         Service,
         related_name="bookings",
     )
-    date = models.ForeignKey(
+    date_shedule = models.ForeignKey(
         Schedule,
         on_delete=models.CASCADE,
         related_name="bookings_schedule",
         null=True
     )
+    start_booking = models.TimeField(default=timezone.now)
+    end_booking = models.TimeField(blank=True, null=True)
     status = models.IntegerField(
         choices=STATUS_BOOKING,
         default=1,
@@ -51,15 +53,16 @@ class Booking(models.Model):
         max_digits=10,
         decimal_places=2,
     )
+    time_required = models.IntegerField(blank=True)
     created_at = models.DateTimeField(
         auto_now_add=True,
     )
 
     def __str__(self):
-        return f"{self.client} - {self.date}"
+        return f"{self.client} - {self.date_shedule}"
 
     class Meta:
-        ordering = ["-created_at"]  # Ordenar por data de criação, do mais recente para o mais antigo
+        ordering = ["-created_at"]
         verbose_name = "Agendamento"
         verbose_name_plural = "Agendamentos"
-        unique_together = ["salon", "date"]  # Garantir que não haja agendamentos duplicados para um mesmo salão e data de agendamento
+        unique_together = ["salon", "date_shedule"]
