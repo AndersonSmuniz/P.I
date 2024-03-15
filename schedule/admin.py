@@ -6,7 +6,6 @@ from .models import Schedule
 class ScheduleAdmin(admin.ModelAdmin):
     list_display = (
         "display_salon",
-        "display_collaborator_user",
         "display_service",
         "day",
         "start",
@@ -34,10 +33,10 @@ class ScheduleAdmin(admin.ModelAdmin):
 
     display_salon.short_description = "Salon"
 
-    def display_collaborator_user(self, obj):
-        return obj.collaborator_user.full_name
+    # def display_collaborator_user(self, obj):
+    #     return obj.collaborator_user
 
-    display_collaborator_user.short_description = "Collaborator User"
+    # display_collaborator_user.short_description = "Collaborator User"
 
     def display_service(self, obj):
         return ", ".join([service.title for service in obj.service.all()])
