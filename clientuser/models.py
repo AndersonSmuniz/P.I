@@ -4,8 +4,6 @@ from my_auth.models import Auth
 
 
 class ClientUser(ExtraField):
-    cpf = models.CharField(max_length=11, null=False, blank=False)
-
     auth = models.OneToOneField(
         Auth,
         on_delete=models.CASCADE,

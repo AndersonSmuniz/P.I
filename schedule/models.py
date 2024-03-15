@@ -17,16 +17,15 @@ class Schedule(models.Model):
     salon = models.ForeignKey(
         Salon,
         on_delete=models.CASCADE,
-        related_name="schedule",
+        related_name="schedule_salon",
     )
     service = models.ManyToManyField(
         Service,
-        related_name="schedule",
+        related_name="schedule_service",
     )
-    collaborator_user = models.ForeignKey(
+    collaborator_user = models.ManyToManyField(
         CollaboratorUser,
-        on_delete=models.CASCADE,
-        related_name="schedule",
+        related_name="schedule_collaborator",
     )
     day = models.IntegerField(
         choices=DAYS_OF_WEEK,
@@ -44,7 +43,3 @@ class Schedule(models.Model):
         ordering = ["day", "start"]
         verbose_name = "Agendamento"
         verbose_name_plural = "Agendamentos"
-        indexes = [
-            models.Index(fields=["day", "start"]),
-            models.Index(fields=["collaborator_user"]),
-        ]

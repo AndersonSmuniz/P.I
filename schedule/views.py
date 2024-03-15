@@ -7,7 +7,3 @@ from rest_framework import viewsets
 class ScheduleListAPIView(viewsets.ModelViewSet):
     queryset = Schedule.objects.all()
     serializer_class = ScheduleSerializer
-
-class ScheduleDetailAPIView(viewsets.ModelViewSet):
-    queryset = Schedule.objects.all()
-    serializer_class = ScheduleSerializer

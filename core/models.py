@@ -7,6 +7,7 @@ class ExtraField(models.Model):
     phone = models.CharField(max_length=16)
     email = models.EmailField(unique=True)
     photo = models.URLField(null=True)
+    cpf = models.CharField(max_length=11, null=False, blank=False)
 
     class Meta:
         abstract = True
