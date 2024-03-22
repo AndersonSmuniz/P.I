@@ -16,12 +16,14 @@ class BookingViewSet(viewsets.ModelViewSet):
         services_data = mutable_data.pop('service', [])
 
         # Obter o ID da instância de Schedule usando o primeiro valor da lista fornecida
-        schedule_id = mutable_data.pop('date_shedule', None)[0] if mutable_data.get('date_shedule') else None
+        schedule_id = mutable_data.pop('date_shedule', None)
 
         # Verificar se o ID é fornecido e obter a instância de Schedule correspondente
         schedule_instance = None
         if schedule_id is not None:
-            schedule_instance = Schedule.objects.get(pk=schedule_id)
+            schedule_instance = Schedule.objects.get(pk=schedule_id[0])
+
+            print(schedule_instance)
 
         serializer = self.get_serializer(data=mutable_data)
         serializer.is_valid(raise_exception=True)
@@ -35,7 +37,7 @@ class BookingViewSet(viewsets.ModelViewSet):
             salon_id=mutable_data['salon'],
             collaborator_id=mutable_data['collaborator'],
             client_id=mutable_data['client'],
-            date=schedule_instance,
+            date=schedule_instance.id,
             start_booking=mutable_data['start_booking'],  # Adicionando o horário de início
             end_booking=None,  # Inicialmente definido como None
             status=mutable_data.get('status', 1),
