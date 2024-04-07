@@ -10,6 +10,8 @@ class ServiceSerializer(serializers.ModelSerializer):
             "salon",
             "title",
             "price",
+            "image",
+            "description",
             "status",
             "duration",
             "recurrence",

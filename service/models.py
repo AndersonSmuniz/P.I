@@ -6,9 +6,8 @@ from clientuser.models import ClientUser
 
 class Service(models.Model):
     STATUS_CHOICES = [
-        ("pending", "Pendente"),
-        ("completed", "Concluído"),
-        ("cancelled", "Cancelado"),
+        ("0", "Ativo"),
+        ("1", "Inativo"),
     ]
 
     salon = models.ForeignKey(
@@ -32,8 +31,9 @@ class Service(models.Model):
     status = models.CharField(
         max_length=20,
         choices=STATUS_CHOICES,
-        default="pending",
+        default="0",
     )
+    image = models.URLField(null=True,)
     duration = models.IntegerField()
     recurrence = models.IntegerField()
     description = models.TextField()
