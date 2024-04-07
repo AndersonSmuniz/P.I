@@ -97,9 +97,9 @@ class ClientService(models.Model):
         ClientUser,
         on_delete=models.CASCADE,
     )
-    service = models.ForeignKey(
+    services = models.ManyToManyField(
         Service,
-        on_delete=models.CASCADE,
+        related_name="services",
     )
     status = models.CharField(
         max_length=20,

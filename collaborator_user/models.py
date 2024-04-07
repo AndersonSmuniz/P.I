@@ -15,6 +15,7 @@ class SalonCollaborator(models.Model):
     )
     status = models.CharField(
         max_length=255,
+        default="ativo"
     )
 
     def __str__(self):
@@ -51,7 +52,7 @@ class CollaboratorUser(ExtraField):
     salon_collaborators = models.ManyToManyField(
         Salon,
         through="SalonCollaborator",
-        verbose_name="Colaboradores do Salão",
+        verbose_name="Colaborador dos Salões",
     )
 
     def __str__(self):

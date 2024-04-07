@@ -14,6 +14,6 @@ class CollaboratorUserAdmin(admin.ModelAdmin):
     ]
 
     def display_salon_collaborators(self, obj):
-        return ", ".join([salon.name for salon in obj.salon_collaborators.all()])
+        return ", ".join([str(salon) for salon in obj.salon_collaborators.all()])
 
     display_salon_collaborators.short_description = "Salon Collaborators"
