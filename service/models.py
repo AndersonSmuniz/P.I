@@ -56,7 +56,7 @@ class Service(models.Model):
 
 class CollaboratorService(models.Model):
     STATUS_CHOICES = [
-        ("active", "Ativo"),
+        (0, "Ativo"),
         ("inactive", "Inativo"),
     ]
 
