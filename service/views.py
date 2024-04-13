@@ -1,22 +1,16 @@
 from rest_framework import viewsets, status
 from rest_framework.generics import ListCreateAPIView
 from .serializer import ServiceSerializer
-from .models import Service, ClientService, CollaboratorService
+from .models import Service, Category
 from .serializer import (
     ServiceSerializer,
-    ClientServiceSerializer,
-    CollaboratorServiceSerializer
+    CategorySerializer
 )
 
 
 class ServiceViewSet(viewsets.ModelViewSet):
     queryset = Service.objects.all()
     serializer_class = ServiceSerializer
-
-
-class ClientServiceViewSet(viewsets.ModelViewSet):
-    queryset = ClientService.objects.all()
-    serializer_class = ClientServiceSerializer
 
 
 class SalonServicesView(ListCreateAPIView):
@@ -34,12 +28,6 @@ class SalonServicesView(ListCreateAPIView):
         serializer.save(salon_id=salon_id)
 
 
-class ServiceCollaboratorsListView(ListCreateAPIView):
-    queryset = CollaboratorService.objects.all()
-    serializer_class = CollaboratorServiceSerializer
-
-    def get_queryset(self):
-        service_id = self.kwargs.get("service_id")
-        return CollaboratorService.objects.filter(
-            service_id=service_id, status="active"
-        )
+class CategoryView(viewsets.ModelViewSet):
+    queryset = Category.objects.all()
+    serializer_class = CategorySerializer

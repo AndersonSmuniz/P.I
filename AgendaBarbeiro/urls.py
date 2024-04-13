@@ -7,9 +7,8 @@ from schedule.views import AvailableScheduleViewSet
 from booking.views import BookingViewSet
 from service.views import (
     ServiceViewSet,
-    ClientServiceViewSet,
     SalonServicesView,
-    ServiceCollaboratorsListView,
+    CategoryView
 )
 from clientuser.views import (
     ClientCreateViewSet,
@@ -29,7 +28,7 @@ router.register("location", LocationViewSet, basename="location")
 router.register("promotions", PromotionListAPIView, basename="promotion")
 router.register("schedules", AvailableScheduleViewSet, basename="schedule_list")
 router.register("service", ServiceViewSet, basename="service")
-router.register("client_service", ClientServiceViewSet, basename="client_service")
+router.register("category", CategoryView, basename="category")
 router.register("collaborator", CollaboratorViewSet, basename="collaborator")
 router.register(
     "salon_collaborator", SalonCollaboratorViewSet, basename="salon_collaborator"
@@ -43,11 +42,6 @@ urlpatterns = [
     path("admin/", admin.site.urls),
     path("", include(router.urls)),
     path("salon/<int:id>/services", SalonServicesView.as_view(), name="salon_services"),
-    path(
-        "service/<int:service_id>/collaborators/",
-        ServiceCollaboratorsListView.as_view(),
-        name="service_collaborators_list",
-    ),
     path("api/token/", TokenObtainPairView.as_view(), name="token_obtain_pair"),
     path("api/token/refresh/", TokenRefreshView.as_view(), name="token_refresh"),
     path("api/token/verify/", TokenVerifyView.as_view(), name="token_verify"),
