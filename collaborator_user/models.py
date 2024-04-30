@@ -9,6 +9,7 @@ class SalonCollaborator(models.Model):
         "CollaboratorUser",
         on_delete=models.CASCADE,
     )
+
     salon = models.ForeignKey(
         Salon,
         on_delete=models.CASCADE,
@@ -54,6 +55,7 @@ class CollaboratorUser(ExtraField):
         through="SalonCollaborator",
         verbose_name="Colaborador dos Salões",
     )
+    
 
     def __str__(self):
         return self.full_name
@@ -61,3 +63,13 @@ class CollaboratorUser(ExtraField):
     class Meta:
         verbose_name = "Colaborador"
         verbose_name_plural = "Colaboradores"
+
+class Curriculum(models.Model):
+    id_curriculum = models.BigAutoField(primary_key=True)
+    name_course = models.CharField(max_length=30)
+
+    # Definição das escolhas para o campo "course"
+    Type_Course = models.TextChoices("Type_Course", "profissionalizante técnico superior")
+    course = models.CharField(blank=True, choices=Type_Course.choices, max_length=30)
+    
+    colaborador = models.ForeignKey(CollaboratorUser, on_delete=models.CASCADE)
