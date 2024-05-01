@@ -29,3 +29,17 @@ class SalonCollaboratorSerializer(serializers.ModelSerializer):
     class Meta:
         model = SalonCollaborator
         fields = ["id", "salon", "collaborator", "status"]
+
+
+class BarberSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = CollaboratorUser
+        fields = [
+            "auth",
+            "full_name",
+            "is_barber",
+            "salon_collaborators",
+            "phone",
+            "photo",
+        ]
