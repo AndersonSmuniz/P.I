@@ -14,10 +14,7 @@ class SalonCollaborator(models.Model):
         Salon,
         on_delete=models.CASCADE,
     )
-    status = models.CharField(
-        max_length=255,
-        default="ativo"
-    )
+    status = models.CharField(max_length=255, default="ativo")
 
     def __str__(self):
         return (
@@ -55,7 +52,6 @@ class CollaboratorUser(ExtraField):
         through="SalonCollaborator",
         verbose_name="Colaborador dos Salões",
     )
-    
 
     def __str__(self):
         return self.full_name
@@ -64,12 +60,17 @@ class CollaboratorUser(ExtraField):
         verbose_name = "Colaborador"
         verbose_name_plural = "Colaboradores"
 
-class Curriculum(models.Model):
-    id_curriculum = models.BigAutoField(primary_key=True)
-    name_course = models.CharField(max_length=30)
 
-    # Definição das escolhas para o campo "course"
-    Type_Course = models.TextChoices("Type_Course", "profissionalizante técnico superior")
-    course = models.CharField(blank=True, choices=Type_Course.choices, max_length=30)
-    
+class Curriculum(models.Model):
+    LEVEL_COURSE = [
+        (1, "Profissionalizante"),
+        (2, "Técnico"),
+        (3, "Superior"),
+    ]
+    name_course = models.CharField(max_length=30)
+    course_level = models.IntegerField(choices=LEVEL_COURSE, blank=True, null=True)
+    institution = models.CharField(max_length=100, blank=True)
     colaborador = models.ForeignKey(CollaboratorUser, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return f"{self.name_course} - {self.institution}"

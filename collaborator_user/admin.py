@@ -20,6 +20,11 @@ class CollaboratorUserAdmin(admin.ModelAdmin):
 
 @admin.register(Curriculum)
 class CurriculumAdmin(admin.ModelAdmin):
-    list_display=["name_course", "Type_Course"]
+    list_display= [
+        "colaborador",
+        "name_course",
+        "course_level",
+        "institution",
+    ]
    
 
