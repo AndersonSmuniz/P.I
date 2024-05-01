@@ -1,34 +1,50 @@
 from django.db import models
-from salon.models import Salon
 from collaborator_user.models import CollaboratorUser
+from salon.models import Salon
 from clientuser.models import ClientUser
+from schedule.models import Schedule
 from service.models import Service
-
+from django.utils import timezone
 
 class Booking(models.Model):
-    """
-    Model de agendamento
-    """
+    STATUS_BOOKING = [
+        (1, "livre"),
+        (2, "ocupado"),
+        (3, "finalizado"),
+        (4, "desativo"),
+    ]
 
     salon = models.ForeignKey(
         Salon,
         on_delete=models.CASCADE,
-        related_name="booking",
+        related_name="bookings_salon",
     )
     collaborator = models.ForeignKey(
         CollaboratorUser,
         on_delete=models.PROTECT,
-        related_name="booking",
+        related_name="bookings_collaborator",
     )
     client = models.ForeignKey(
         ClientUser,
         on_delete=models.PROTECT,
-        related_name="booking",
+        related_name="bookings_client",
     )
-    service = models.ManyToManyField(
+    services = models.ManyToManyField(
         Service,
+        related_name="bookings",
     )
-    date = models.DateTimeField()
+    date_shedule = models.ForeignKey(
+        Schedule,
+        on_delete=models.CASCADE,
+        related_name="bookings_schedule",
+        null=True
+    )
+    start_booking = models.TimeField(default=timezone.now)
+    end_booking = models.TimeField(blank=True, null=True)
+    status = models.IntegerField(
+        choices=STATUS_BOOKING,
+        default=1,
+    )
     commission = models.DecimalField(
         max_digits=10,
         decimal_places=2,
@@ -37,26 +53,16 @@ class Booking(models.Model):
         max_digits=10,
         decimal_places=2,
     )
+    time_required = models.IntegerField(blank=True)
     created_at = models.DateTimeField(
         auto_now_add=True,
     )
 
-    def __str__(self) -> str:
-        return f"{self.client} - {self.date}"
+    def __str__(self):
+        return f"{self.client} - {self.date_shedule}"
 
     class Meta:
-        ordering = [
-            "-date"
-        ]  # Ordena as reservas pela data, da mais recente para a mais antiga
-        verbose_name = "Agendamento"  # Nome singular
-        verbose_name_plural = "Agendamentos"  # Nome plural
-        unique_together = [
-            "salon",
-            "date",
-        ]  # Garante que não haja agendamentos duplicados na mesma data e no mesmo salão
-        permissions = [
-            (
-                "can_view_all_bookings",
-                "Can view all bookings",
-            ),  # Permissão personalizada
-        ]
+        ordering = ["-created_at"]
+        verbose_name = "Agendamento"
+        verbose_name_plural = "Agendamentos"
+        unique_together = ["salon", "date_shedule"]

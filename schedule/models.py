@@ -17,16 +17,15 @@ class Schedule(models.Model):
     salon = models.ForeignKey(
         Salon,
         on_delete=models.CASCADE,
-        related_name="schedule",
+        related_name="schedule_salon",
     )
     service = models.ManyToManyField(
         Service,
-        related_name="schedule",
+        related_name="schedule_service",
     )
-    collaborator_user = models.ForeignKey(
+    collaborator_user = models.ManyToManyField(
         CollaboratorUser,
-        on_delete=models.CASCADE,
-        related_name="schedule",
+        related_name="schedule_collaborator",
     )
     day = models.IntegerField(
         choices=DAYS_OF_WEEK,
@@ -38,13 +37,9 @@ class Schedule(models.Model):
     )
 
     def __str__(self):
-        return f"{self.collaborator_user} - {self.get_day_display()} - {self.start}"
+        return f"{self.get_day_display()} - {self.start}"
 
     class Meta:
         ordering = ["day", "start"]
-        verbose_name = "Agendamento"
-        verbose_name_plural = "Agendamentos"
-        indexes = [
-            models.Index(fields=["day", "start"]),
-            models.Index(fields=["collaborator_user"]),
-        ]
+        verbose_name = "Calendario"
+        verbose_name_plural = "Calendarios"

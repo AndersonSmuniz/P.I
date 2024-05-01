@@ -3,12 +3,36 @@ from salon.models import Salon
 from collaborator_user.models import CollaboratorUser
 from clientuser.models import ClientUser
 
+class Category(models.Model):
+    title = models.CharField(
+        max_length=100,
+        null=False,
+        blank=False,
+    )
+    salon = models.ForeignKey(
+        Salon,
+        on_delete=models.CASCADE,
+        related_name="categories",
+    )
+    description = models.TextField(
+        null=False,
+        blank=False,
+    )
+    image = models.URLField(null=True, blank=True)
+
+    def __str__(self):
+        return self.title
+
+    class Meta:
+        ordering = ["title"]
+        verbose_name = "Categoria"
+        verbose_name_plural = "Categorias"
+
 
 class Service(models.Model):
     STATUS_CHOICES = [
-        ("pending", "Pendente"),
-        ("completed", "Concluído"),
-        ("cancelled", "Cancelado"),
+        ("0", "Ativo"),
+        ("1", "Inativo"),
     ]
 
     salon = models.ForeignKey(
@@ -19,6 +43,13 @@ class Service(models.Model):
     collaborator_user = models.ManyToManyField(
         CollaboratorUser,
         through="CollaboratorService",
+    )
+    category = models.ForeignKey(
+        Category,
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        related_name="services",
     )
     title = models.CharField(
         max_length=100,
@@ -32,8 +63,9 @@ class Service(models.Model):
     status = models.CharField(
         max_length=20,
         choices=STATUS_CHOICES,
-        default="pending",
+        default="0",
     )
+    image = models.URLField(null=True,)
     duration = models.IntegerField()
     recurrence = models.IntegerField()
     description = models.TextField()
@@ -56,8 +88,8 @@ class Service(models.Model):
 
 class CollaboratorService(models.Model):
     STATUS_CHOICES = [
-        ("active", "Ativo"),
-        ("inactive", "Inativo"),
+        (0, "Ativo"),
+        (1, "Inativo"),
     ]
 
     collaborator_user = models.ForeignKey(
@@ -71,7 +103,7 @@ class CollaboratorService(models.Model):
     status = models.CharField(
         max_length=20,
         choices=STATUS_CHOICES,
-        default="active",
+        default="Ativo",
     )
     created_date = models.DateField(
         auto_now_add=True,
@@ -97,9 +129,9 @@ class ClientService(models.Model):
         ClientUser,
         on_delete=models.CASCADE,
     )
-    service = models.ForeignKey(
+    services = models.ManyToManyField(
         Service,
-        on_delete=models.CASCADE,
+        related_name="services",
     )
     status = models.CharField(
         max_length=20,

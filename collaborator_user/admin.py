@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import CollaboratorUser
+from .models import CollaboratorUser, Curriculum
 
 
 @admin.register(CollaboratorUser)
@@ -14,6 +14,17 @@ class CollaboratorUserAdmin(admin.ModelAdmin):
     ]
 
     def display_salon_collaborators(self, obj):
-        return ", ".join([salon.name for salon in obj.salon_collaborators.all()])
+        return ", ".join([str(salon) for salon in obj.salon_collaborators.all()])
 
     display_salon_collaborators.short_description = "Salon Collaborators"
+
+@admin.register(Curriculum)
+class CurriculumAdmin(admin.ModelAdmin):
+    list_display= [
+        "colaborador",
+        "name_course",
+        "course_level",
+        "institution",
+    ]
+   
+
