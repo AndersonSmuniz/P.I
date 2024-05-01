@@ -13,21 +13,19 @@ class ServiceViewSet(viewsets.ModelViewSet):
     serializer_class = ServiceSerializer
 
 
-class SalonServicesView(ListCreateAPIView):
+class CategoryServicesView(ListCreateAPIView):
     queryset = Service.objects.all()
     serializer_class = ServiceSerializer
 
     def get_queryset(self):
-
-        salon_id = self.kwargs.get("id")
-        return self.queryset.filter(salon_id=salon_id)
-
-    def perform_create(self, serializer):
-
-        salon_id = self.kwargs.get("salon_id")
-        serializer.save(salon_id=salon_id)
+        category_id = self.kwargs.get("id")
+        return self.queryset.filter(category_id=category_id)
 
 
-class CategoryView(viewsets.ModelViewSet):
+class CategoryView(ListCreateAPIView):
     queryset = Category.objects.all()
     serializer_class = CategorySerializer
+
+    def get_queryset(self):
+        salon_id = self.kwargs.get("id")
+        return self.queryset.filter(salon_id=salon_id)
