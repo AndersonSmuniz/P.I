@@ -9,14 +9,12 @@ class SalonCollaborator(models.Model):
         "CollaboratorUser",
         on_delete=models.CASCADE,
     )
+
     salon = models.ForeignKey(
         Salon,
         on_delete=models.CASCADE,
     )
-    status = models.CharField(
-        max_length=255,
-        default="ativo"
-    )
+    status = models.CharField(max_length=255, default="ativo")
 
     def __str__(self):
         return (
@@ -61,3 +59,18 @@ class CollaboratorUser(ExtraField):
     class Meta:
         verbose_name = "Colaborador"
         verbose_name_plural = "Colaboradores"
+
+
+class Curriculum(models.Model):
+    LEVEL_COURSE = [
+        (1, "Profissionalizante"),
+        (2, "Técnico"),
+        (3, "Superior"),
+    ]
+    name_course = models.CharField(max_length=30)
+    course_level = models.IntegerField(choices=LEVEL_COURSE, blank=True, null=True)
+    institution = models.CharField(max_length=100, blank=True)
+    colaborador = models.ForeignKey(CollaboratorUser, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return f"{self.name_course} - {self.institution}"
