@@ -148,3 +148,4 @@ class ClientService(models.Model):
     class Meta:
         verbose_name = "Cliente Serviço"
         verbose_name_plural = "Clientes Serviço"
+

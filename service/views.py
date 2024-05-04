@@ -7,7 +7,6 @@ from .serializer import (
     CategorySerializer
 )
 
-
 class ServiceViewSet(viewsets.ModelViewSet):
     queryset = Service.objects.all()
     serializer_class = ServiceSerializer
@@ -31,3 +30,5 @@ class SalonServicesView(ListCreateAPIView):
 class CategoryView(viewsets.ModelViewSet):
     queryset = Category.objects.all()
     serializer_class = CategorySerializer
+
+
