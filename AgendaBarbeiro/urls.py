@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.urls import path, include
 from rest_framework import routers
-from salon.views import SalonViewSet, LocationViewSet
+from salon.views import FavoriteViewSet, SalonViewSet, LocationViewSet
 from promotion.views import PromotionListAPIView
 from schedule.views import AvailableScheduleViewSet, AvailableSlotsView
 from booking.views import BookingViewSet
@@ -36,6 +36,8 @@ router.register("create-booking", BookingViewSet, basename="create-booking")
 router.register("client/create", ClientCreateViewSet, basename="client-create")
 router.register("client/update", ClientUpdateViewSet, basename="client-update")
 router.register("client/delete", ClientDestroyViewSet, basename="client-destroy")
+router.register("favorite", FavoriteViewSet, basename="favorite") 
+from service import views
 
 urlpatterns = [
     path("admin/", admin.site.urls),
@@ -48,4 +50,7 @@ urlpatterns = [
     path("api/token/", TokenObtainPairView.as_view(), name="token_obtain_pair"),
     path("api/token/refresh/", TokenRefreshView.as_view(), name="token_refresh"),
     path("api/token/verify/", TokenVerifyView.as_view(), name="token_verify"),
+    
 ]
+
+

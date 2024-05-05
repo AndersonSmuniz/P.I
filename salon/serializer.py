@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Location, Salon
+from .models import Favorite, Location, Salon
 
 
 class LocationSerializer(serializers.ModelSerializer):
@@ -14,3 +14,10 @@ class SalonSerializer(serializers.ModelSerializer):
     class Meta:
         model = Salon
         fields = ["id", "name_salon", "address", "locations", "photo"]
+
+
+class FavoriteSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Favorite
+        fields = ["id", "salon", "client_user"]
+

@@ -1,6 +1,6 @@
 from django.db import models
 from core.models import ExtraField
-
+from clientuser.models import ClientUser
 
 class Salon(ExtraField):
     """
@@ -37,3 +37,7 @@ class Location(models.Model):
     class Meta:
         verbose_name = "Localização"
         verbose_name_plural = "Localizações"
+
+class Favorite(models.Model):
+    client_user = models.ForeignKey(ClientUser, on_delete=models.CASCADE)
+    salon = models.ForeignKey(Salon, on_delete=models.CASCADE)
