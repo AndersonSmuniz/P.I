@@ -51,7 +51,7 @@ class AvailableSlotsView(APIView):
         dia_semana = data_formatada.isoweekday() + 1
         if dia_semana == 8:
             dia_semana = 1
-        print(dia_semana, barber)
+        print(dia_semana, request)
         # Obtém o horário de trabalho do barbeiro no dia da semana fornecido
         schedule = Schedule.objects.filter(collaborator_user=barber, day=dia_semana).first()
         print(schedule)
@@ -68,9 +68,10 @@ class AvailableSlotsView(APIView):
         
         print(bookings)
         # Obtém os serviços escolhidos pelo cliente
-        services_ids = request.GET.get('services')
+        services_ids = request.GET.getlist('services[]')
+        print(services_ids)
         services = Service.objects.filter(id__in=services_ids)
-        print(services)
+        print('qqqqqq',services)
         
         # Calcula a duração total dos serviços escolhidos
         total_duration = sum([service.duration for service in services])
@@ -78,11 +79,11 @@ class AvailableSlotsView(APIView):
         
         # Calcula o horário final do barbeiro
         horario_final = schedule.end
-        print(horario_final)
+        print('22222222',horario_final)
         # Calcula quantos horários livres estão disponíveis
         horarios_livres = []
         horario_atual = schedule.start
-
+        print(horario_atual < horario_final)
         while horario_atual < horario_final:
             horario_disponivel = True
             
@@ -98,5 +99,5 @@ class AvailableSlotsView(APIView):
                 horarios_livres.append(horario_atual.strftime('%H:%M'))
             
             horario_atual += timedelta(minutes=total_duration)
-        
+        print('aaaaaaa',horarios_livres)
         return Response({'id': schedule.id,'horarios_livres': horarios_livres})
