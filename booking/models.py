@@ -53,7 +53,7 @@ class Booking(models.Model):
         max_digits=10,
         decimal_places=2,
     )
-    time_required = models.IntegerField(blank=True)
+    time_required = models.IntegerField(blank=True, null=True)
     created_at = models.DateTimeField(
         auto_now_add=True,
     )
@@ -65,4 +65,3 @@ class Booking(models.Model):
         ordering = ["-created_at"]
         verbose_name = "Agendamento"
         verbose_name_plural = "Agendamentos"
-        unique_together = ["salon", "date_shedule"]
