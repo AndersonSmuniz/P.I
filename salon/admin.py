@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Salon, Location
+from .models import Favorite, Salon, Location
 
 
 @admin.register(Salon)
@@ -25,3 +25,10 @@ class LocationAdmin(admin.ModelAdmin):
         "coordinates",
     )
     search_fields = ("salon_id",)
+
+@admin.register(Favorite)
+class FavoriteAdmin(admin.ModelAdmin):
+    list_display=(
+        "client_user",
+        "salon"
+    )

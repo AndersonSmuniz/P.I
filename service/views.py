@@ -7,7 +7,6 @@ from .serializer import (
     CategorySerializer
 )
 
-
 class ServiceViewSet(viewsets.ModelViewSet):
     queryset = Service.objects.all()
     serializer_class = ServiceSerializer
@@ -29,3 +28,5 @@ class CategoryView(ListCreateAPIView):
     def get_queryset(self):
         salon_id = self.kwargs.get("id")
         return self.queryset.filter(salon_id=salon_id)
+
+

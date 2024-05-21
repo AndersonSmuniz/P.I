@@ -5,6 +5,7 @@ from service.models import Service
 from .serializer import BookingSerializer
 from schedule.models import Schedule
 
+
 class BookingViewSet(viewsets.ModelViewSet):
     queryset = Booking.objects.all()
     serializer_class = BookingSerializer
@@ -13,10 +14,11 @@ class BookingViewSet(viewsets.ModelViewSet):
         mutable_data = request.data.copy()
 
         # Obter os serviços selecionados e removê-los dos dados
-        services_data = mutable_data.pop('service', [])
+        services_ids = request.GET.getlist("services[]")
+        services_data = mutable_data.pop("service", [])
 
         # Obter o ID da instância de Schedule usando o primeiro valor da lista fornecida
-        schedule_id = mutable_data.pop('date_shedule', None)
+        schedule_id = mutable_data.pop("date_shedule", None)
 
         # Verificar se o ID é fornecido e obter a instância de Schedule correspondente
         schedule_instance = None
@@ -29,21 +31,28 @@ class BookingViewSet(viewsets.ModelViewSet):
         serializer.is_valid(raise_exception=True)
 
         # Calculando a comissão e o total_amount
-        total_commission = sum(Service.objects.get(id=service_id).commission for service_id in services_data)
-        total_amount = sum(Service.objects.get(id=service_id).price for service_id in services_data)
+        total_commission = sum(
+            Service.objects.get(id=service_id).commission
+            for service_id in services_data
+        )
+        total_amount = sum(
+            Service.objects.get(id=service_id).price for service_id in services_data
+        )
 
         # Criando a instância do Booking
         booking = Booking.objects.create(
-            salon_id=mutable_data['salon'],
-            collaborator_id=mutable_data['collaborator'],
-            client_id=mutable_data['client'],
+            salon_id=mutable_data["salon"],
+            collaborator_id=mutable_data["collaborator"],
+            client_id=mutable_data["client"],
             date=schedule_instance.id,
-            start_booking=mutable_data['start_booking'],  # Adicionando o horário de início
+            start_booking=mutable_data[
+                "start_booking"
+            ],  # Adicionando o horário de início
             end_booking=None,  # Inicialmente definido como None
-            status=mutable_data.get('status', 1),
+            status=mutable_data.get("status", 1),
             total_amount=total_amount,
             commission=total_commission,
-            time_required=None  # Será calculado após salvar
+            time_required=None,  # Será calculado após salvar
         )
 
         # Adicionando os serviços ao Booking
@@ -59,4 +68,6 @@ class BookingViewSet(viewsets.ModelViewSet):
         booking.save()
 
         headers = self.get_success_headers(serializer.data)
-        return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
+        return Response(
+            serializer.data, status=status.HTTP_201_CREATED, headers=headers
+        )
