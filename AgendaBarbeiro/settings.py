@@ -17,6 +17,9 @@ SECRET_KEY = str(os.getenv("SECRET_KEY"))
 DEBUG = os.getenv("DEBUG", default=False)
 
 ALLOWED_HOSTS = ["*"]
+#ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'b262-138-36-242-100.ngrok-free.app']
+#CSRF_TRUSTED_ORIGINS = ['https://b262-138-36-242-100.ngrok-free.app']
+
 
 # Application definition
 
