@@ -32,7 +32,7 @@ router.register("collaborator", CollaboratorViewSet, basename="collaborator")
 router.register(
     "salon_collaborator", SalonCollaboratorViewSet, basename="salon_collaborator"
 )
-router.register("create-booking", BookingViewSet, basename="create-booking")
+router.register("booking", BookingViewSet, basename="create-booking")
 router.register("client/create", ClientCreateViewSet, basename="client-create")
 router.register("client/update", ClientUpdateViewSet, basename="client-update")
 router.register("client/delete", ClientDestroyViewSet, basename="client-destroy")

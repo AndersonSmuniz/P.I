@@ -39,8 +39,8 @@ class Booking(models.Model):
         related_name="bookings_schedule",
         null=True
     )
-    start_booking = models.TimeField(default=timezone.now)
-    end_booking = models.TimeField(blank=True, null=True)
+    start_booking = models.DateTimeField()
+    end_booking = models.DateTimeField(blank=True, null=True)
     status = models.IntegerField(
         choices=STATUS_BOOKING,
         default=1,
@@ -59,7 +59,7 @@ class Booking(models.Model):
     )
 
     def __str__(self):
-        return f"{self.client} - {self.date_shedule}"
+        return f"{self.client} - {self.start_booking}"
 
     class Meta:
         ordering = ["-created_at"]

@@ -38,6 +38,7 @@ class AvailableSlotsView(APIView):
             return Response({"message": "Barbeiro não possui horário disponível para o dia selecionado"}, status=400)
 
         data_formatada_datetime = datetime.combine(data_formatada, datetime.min.time())
+        print("data",data_formatada_datetime,data_formatada )
 
         bookings = get_bookings(schedule, data_formatada_datetime)
         print(bookings)
@@ -48,7 +49,8 @@ class AvailableSlotsView(APIView):
         total_duration = calculate_total_duration(services)
         print(total_duration)
 
-        horarios_livres = get_available_slots(schedule, bookings, data_formatada, total_duration)
+        horarios_livres = get_available_slots(schedule, bookings, total_duration)
+        print(horarios_livres)
 
         return Response({"id": schedule.id, "horarios_livres": horarios_livres})
     

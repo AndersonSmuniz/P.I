@@ -1,5 +1,6 @@
 from datetime import timedelta
-from pathlib import Path, os
+from pathlib import Path
+import os
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -18,6 +19,13 @@ DEBUG = os.getenv("DEBUG", default=False)
 
 ALLOWED_HOSTS = ["*"]
 
+# Convert the CORS_ALLOW_ALL_ORIGINS environment variable to a boolean
+CORS_ALLOW_ALL_ORIGINS = os.getenv("CORS_ALLOW_ALL_ORIGINS", "False") == "True"
+
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:5173",
+]
+
 # Application definition
 
 INSTALLED_APPS = [
@@ -31,6 +39,7 @@ INSTALLED_APPS = [
     'rest_framework_simplejwt',
     "salon",
     "collaborator_user",
+    "corsheaders",
     "my_auth",
     "booking",
     "clientuser",
@@ -38,7 +47,6 @@ INSTALLED_APPS = [
     "promotion",
     "schedule",
     "service",
-    
 ]
 
 MIDDLEWARE = [
@@ -49,6 +57,8 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    "corsheaders.middleware.CorsMiddleware",
+    "django.middleware.common.CommonMiddleware",
 ]
 
 REST_FRAMEWORK = {
