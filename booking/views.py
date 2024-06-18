@@ -71,6 +71,7 @@ class BookingViewSet(viewsets.ModelViewSet):
         mutable_data["services"] = services_data
         mutable_data["date_shedule"] = schedule_instance.id
         mutable_data["start_booking"] = start_booking_datetime
+        mutable_data["total_amount"] = 0
         
         print(mutable_data)
         serializer = self.get_serializer(data=mutable_data)

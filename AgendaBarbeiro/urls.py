@@ -22,6 +22,8 @@ from rest_framework_simplejwt.views import (
     TokenVerifyView,
 )
 
+from my_auth.views import UserDetailView
+
 router = routers.DefaultRouter()
 router.register("salon", SalonViewSet, basename="salon")
 router.register("location", LocationViewSet, basename="location")
@@ -56,6 +58,11 @@ urlpatterns = [
         "schedule/barber/<int:barber>/date/<str:date>/",
         AvailableSlotsView.as_view(),
         name="schedule_free",
+    ),
+    path(
+        "auth/",
+        UserDetailView.as_view(),
+        name="auth",
     ),
     # JWT
     path("api/token/", TokenObtainPairView.as_view(), name="token_obtain_pair"),

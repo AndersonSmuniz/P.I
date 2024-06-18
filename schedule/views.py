@@ -44,7 +44,9 @@ class AvailableSlotsView(APIView):
         print(bookings)
 
         services = get_services(request.GET.getlist("services[]"))
-        print(services)
+        print("services",services)
+        if not services:
+            return Response({"message": "Nenhum serviço selecionado"}, status=400)
 
         total_duration = calculate_total_duration(services)
         print(total_duration)
@@ -53,4 +55,3 @@ class AvailableSlotsView(APIView):
         print(horarios_livres)
 
         return Response({"id": schedule.id, "horarios_livres": horarios_livres})
-    

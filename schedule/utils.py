@@ -18,7 +18,7 @@ def get_schedule(barber:int, weekday:int)->object:
     return Schedule.objects.filter(collaborator_user=barber, day=weekday).first()
 
 def get_bookings(schedule: object, date: datetime) -> list:
-    print(date)
+    print("utils",date)
     start_of_day = make_aware(datetime.combine(date.date(), datetime.min.time()))
     end_of_day = make_aware(datetime.combine(date.date(), datetime.max.time()))
     return Booking.objects.filter(date_shedule=schedule, start_booking__range=(start_of_day, end_of_day))

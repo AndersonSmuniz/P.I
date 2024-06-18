@@ -20,6 +20,12 @@ class ClientCreateViewSet(viewsets.ModelViewSet):
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+    def retrieve(self, request, pk=None):
+        user = request.user
+        client_user = get_object_or_404(ClientUser, pk=user)
+        serializer = self.get_serializer(client_user)
+        return Response(serializer.data)
 
 
 class ClientUpdateViewSet(viewsets.ViewSet):
